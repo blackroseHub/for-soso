@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A Special Message for Soso</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
@@ -12,6 +12,7 @@
             background: linear-gradient(135deg, #fff5f5 0%, #fffaf0 100%);
             overflow-x: hidden;
             min-height: 100vh;
+            touch-action: manipulation;
         }
         .handwritten {
             font-family: 'Pacifico', cursive;
@@ -32,9 +33,11 @@
         #noButton {
             transition: all 0.15s ease-out;
             white-space: nowrap;
+            z-index: 50; /* Ensure it stays on top */
         }
         #yesButton {
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 40;
         }
         .food-bg {
             position: fixed;
@@ -68,34 +71,35 @@
     <div class="food-bg" style="top: 40%; left: 5%;">🍯</div>
 
     <!-- Main Card -->
-    <div id="proposalCard" class="glass-card p-10 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.1)] max-w-lg w-full text-center relative z-10 border-4 border-white bounce-in">
+    <div id="proposalCard" class="glass-card p-6 md:p-10 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.1)] max-w-lg w-full text-center relative z-10 border-4 border-white bounce-in">
         
         <!-- Caricature Frame -->
-        <div class="relative w-56 h-56 mx-auto mb-8">
+        <div class="relative w-44 h-44 md:w-56 md:h-56 mx-auto mb-6 md:mb-8">
             <div class="absolute inset-0 bg-gradient-to-tr from-orange-400 to-pink-500 rounded-full animate-pulse opacity-20"></div>
             <div class="relative w-full h-full rounded-full overflow-hidden border-8 border-white shadow-xl floating">
-                <img src="jojososo.png" alt="Jojo and Soso" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Soso+%26+Jojo'">
+                <img id="mainPhoto" src="jojososo.png" alt="Jojo and Soso" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Check+Filename+On+GitHub'">
             </div>
         </div>
 
-        <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-500 mb-3 handwritten">Hey Soso! ❤️</h1>
+        <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-500 mb-3 handwritten">Hey Soso! ❤️</h1>
         
-        <div class="space-y-4 mb-10">
-            <p class="text-lg text-gray-600 leading-relaxed italic">
+        <div class="space-y-4 mb-8 md:mb-10">
+            <p class="text-base md:text-lg text-gray-600 leading-relaxed italic">
                 "Jojo knows you're the <span class="text-orange-500 font-bold">fluffiest Idli</span> and the <span class="text-pink-500 font-bold">sweetest treat</span> in his world."
             </p>
-            <p class="text-gray-500">
+            <p class="text-sm md:text-base text-gray-500">
                 You bring more joy to my life than a <span class="text-red-600 font-bold">double serving of protein</span>! 💪
             </p>
         </div>
         
-        <h2 class="text-3xl font-bold text-gray-800 mb-12">Will you be my Valentine?</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 md:mb-12">Will you be my Valentine?</h2>
 
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 relative min-h-[120px]">
+        <!-- Container with fixed height ensures buttons have space on mobile -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 relative min-h-[160px] sm:min-h-[120px]">
             <button id="yesButton" class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-[0_10px_20px_rgba(239,68,68,0.3)] text-2xl z-20">
                 YES!
             </button>
-            <button id="noButton" class="bg-gray-100 hover:bg-gray-200 text-gray-500 font-bold py-4 px-10 rounded-full shadow-md text-xl sm:static absolute transition-all duration-200">
+            <button id="noButton" class="bg-gray-100 hover:bg-gray-200 text-gray-500 font-bold py-4 px-10 rounded-full shadow-md text-xl relative sm:static transition-all duration-200">
                 No
             </button>
         </div>
@@ -103,25 +107,30 @@
 
     <!-- Success Screen -->
     <div id="successContent" class="hidden fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center text-center p-6 overflow-y-auto">
-        <div class="mb-4 text-9xl animate-bounce">💖</div>
-        <h1 class="text-4xl md:text-6xl font-bold text-red-600 handwritten mb-6">Yeah, Soso said YES to Jojo!</h1>
+        <div class="mb-4 text-8xl md:text-9xl animate-bounce">💖</div>
+        <h1 class="text-3xl md:text-6xl font-bold text-red-600 handwritten mb-6">Yeah, Soso said YES to Jojo!</h1>
         
-        <div class="bg-orange-50 p-6 rounded-3xl border-2 border-orange-200 mb-8 max-w-md">
-            <p class="text-2xl text-orange-700 font-bold italic leading-tight">
+        <div class="bg-orange-50 p-6 rounded-3xl border-2 border-orange-200 mb-8 max-w-md mx-auto">
+            <p class="text-xl md:text-2xl text-orange-700 font-bold italic leading-tight">
                 "Soso ka jojo hai simiru meinn peethanaaaaa"
             </p>
         </div>
 
-        <p class="text-xl text-gray-600 mb-8">Let's celebrate with extra Dosa and all the sweets you want! 🍭🍗</p>
+        <p class="text-lg md:text-xl text-gray-600 mb-8">Let's celebrate with extra Dosa and all the sweets you want! 🍭🍗</p>
         
-        <div class="relative w-72 h-72 rounded-3xl overflow-hidden shadow-2xl border-8 border-white ring-4 ring-orange-100">
-            <img src="jojososo.png" alt="Jojo and Soso" class="w-full h-full object-cover">
+        <div class="relative w-64 h-64 md:w-72 md:h-72 rounded-3xl overflow-hidden shadow-2xl border-8 border-white ring-4 ring-orange-100 mx-auto">
+            <img id="successPhoto" src="jojososo.png" alt="Jojo and Soso" class="w-full h-full object-cover">
         </div>
         
         <button onclick="location.reload()" class="mt-10 text-gray-400 hover:text-red-500 transition-colors underline text-sm">Play again? ❤️</button>
     </div>
 
     <script>
+        const imageFilename = "Gemini_Generated_Image_rc3450rc3450rc34.jpg";
+        const cacheBuster = "?v=" + new Date().getTime();
+        document.getElementById('mainPhoto').src = imageFilename + cacheBuster;
+        document.getElementById('successPhoto').src = imageFilename + cacheBuster;
+
         const noBtn = document.getElementById('noButton');
         const yesBtn = document.getElementById('yesButton');
         const successContent = document.getElementById('successContent');
@@ -145,7 +154,7 @@
             "You're making Jojo cry 😭",
             "There is no 'No' in love!",
             "I'll buy you 100 Idlis!",
-            "Still trying? Persistant!",
+            "Still trying? Persistent!",
             "Just click the big orange one!",
             "I'm running out of quotes!",
             "You're mean! Click Yes!",
@@ -161,37 +170,44 @@
         ];
 
         function moveButton() {
-            // Screen boundaries
-            const padding = 50;
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2) + padding;
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2) + padding;
+            // Clamping logic: Ensure the button stays within 10% - 90% of the screen width/height
+            // This prevents it from ending up behind browser toolbars or off-edge
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+            
+            const maxX = window.innerWidth - btnWidth - 20;
+            const maxY = window.innerHeight - btnHeight - 20;
+
+            const x = Math.max(10, Math.random() * maxX);
+            const y = Math.max(10, Math.random() * maxY);
             
             noBtn.style.position = 'fixed';
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
 
-            // Make Yes button grow aggressively
-            scale += 0.4;
-            yesBtn.style.transform = `scale(${scale})`;
+            // Yes button growth (slightly capped for smaller screens)
+            const maxScale = window.innerWidth < 640 ? 4 : 10;
+            if (scale < maxScale) {
+                scale += 0.4;
+                yesBtn.style.transform = `scale(${scale})`;
+            }
             
-            // Increment message index
             if (noClickCount < messages.length - 1) {
                 noBtn.innerText = messages[noClickCount];
                 noClickCount++;
             } else {
-                // Keep the last message or loop
                 noBtn.innerText = messages[messages.length - 1];
             }
         }
 
-        // Desktop and Mobile interactions
-        noBtn.addEventListener('mouseover', moveButton);
+        // Use touchstart to move the button before the user can fully "tap" it
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Stop the click from happening
             moveButton();
         });
 
-        // Yes Button
+        noBtn.addEventListener('mouseover', moveButton);
+
         yesBtn.addEventListener('click', () => {
             successContent.classList.remove('hidden');
             confettiAnimation();
@@ -224,7 +240,4 @@
         }
     </script>
 </body>
-
 </html>
-
-
